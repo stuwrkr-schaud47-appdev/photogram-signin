@@ -2,13 +2,14 @@
 #
 # Table name: users
 #
-#  id             :integer          not null, primary key
-#  comments_count :integer
-#  likes_count    :integer
-#  private        :boolean
-#  username       :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id              :integer          not null, primary key
+#  comments_count  :integer
+#  likes_count     :integer
+#  password_digest :string
+#  private         :boolean
+#  username        :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 class User < ApplicationRecord
@@ -19,6 +20,12 @@ class User < ApplicationRecord
       :uniqueness => { :case_sensitive => false }
     }
   )
+  # from bcrypt  
+  has_secure_password
+
+  # has_secure_password is doing this
+  # attr_accesor :password
+  # attr_accesor :password_confirmation
 
   def comments
     return Comment.where({ :author_id => self.id })
